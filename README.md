@@ -1,0 +1,1 @@
+This project demonstrates how to use the Claude API to summarize information from PDF files. The implementation runs on Google Cloud Platform (GCP) and is designed to provide insights by summarizing text extracted from PDF documents.
