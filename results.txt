@@ -1,62 +1,121 @@
-import functions_framework
-import io
-from flask import jsonify, make_response
-from ClaudeApi import extract_pdf_text, elaborate_on_topic, generate_quiz_and_outline
-from google.cloud import storage
-import os
+Here are 10 multiple choice quiz questions and a study outline based on the given text:
 
-def get_pdf_data_from_storage(fileName):
-    bucket_name = "my_pdf_bucket1"
-    
-    try:
-        storage_client = storage.Client()
-        bucket = storage_client.bucket(bucket_name)
-        blob = bucket.blob(fileName)
-        
-        pdf_data = blob.download_as_bytes()
-        pdf_data_io = io.BytesIO(pdf_data)
-        return pdf_data_io
-    
-    except Exception as e:
-        print(f"Error accessing cloud storage: {e}")
-        raise
+Quiz Questions:
 
-@functions_framework.http
-@functions_framework.http
-def hello_http(request):
-    try:
-        file_path = "results.txt"
-        if os.path.exists(file_path):
-            with open(file_path, "r") as file:
-                content = file.read()
-            # Return the content as a plain text HTTP response
-            response = make_response(content, 200)
-            response.headers['Content-Type'] = 'text/plain'
-            return response
-        else:
-            # Directly use the hardcoded file name
-            file_name = 'GreatDepression.pdf'
-            # Fetch the PDF data from storage
-            pdf_data_io = get_pdf_data_from_storage(file_name)
-            # Extract text from the PDF
-            text = extract_pdf_text(pdf_data_io)
-            topic = "The impact of Keynesian economics on the Great Depression"
-            # topic = "The Indo-Europeans, and their diverse languages, cultures, and living locations"
-            
-            messages = []
-            quiz_outline_response = generate_quiz_and_outline(messages, text)
-            # Elaborate on the topic
-            elaboration_response = elaborate_on_topic(topic, messages)
-            # Create a JSON object with separate sections
-            response_json = {
-                "GreatDepressionQuizOutline": quiz_outline_response,
-                "GreatDepressionElaboration": elaboration_response
-            }
+1. What was a major cause of the Great Depression according to the text?
+a) Overproduction of goods
+b) The stock market crash of 1929  
+c) The international gold standard
+d) World War I
 
-            return response_json
-    
-    except Exception as e:
-        error_message = f"Error processing request: {e}"
-        print(error_message)
-        return make_response(jsonify({"error": error_message}), 500)
+2. Which policy aimed to raise wages and prices, but ended up reducing production?
+a) The Agricultural Adjustment Act (AAA)
+b) The National Recovery Administration (NRA)
+c) Both the AAA and NRA
+d) Neither the AAA nor NRA
 
+3. What did the Wagner Act of 1935 promote?
+a) Antitrust laws
+b) Labor unions  
+c) Lower wages
+d) Increased production
+
+4. What factor contributed to the recession of 1937-38 according to the text?
+a) Reserve requirement increases by the Federal Reserve
+b) Expansionary monetary policy
+c) Tax cuts 
+d) Devaluation of the dollar
+
+5. According to the text, which was NOT a reason for the slow recovery from the Great Depression?
+a) The National Recovery Administration codes
+b) Lack of investment opportunities
+c) Labor union growth and rising real wage costs
+d) Regime uncertainty from government policies
+
+6. How did the personal exemption and tax rates change under Hoover's tax increase in 1932?
+a) Personal exemptions were reduced and rates increased
+b) Personal exemptions increased and rates decreased
+c) Both personal exemptions and rates increased
+d) Both personal exemptions and rates decreased
+
+7. The effects of World War II spending on the economy are difficult to measure accurately due to:
+a) Rationing and price controls
+b) Reduced business investment 
+c) Decline in real consumption
+d) All of the above
+
+8. According to the regime uncertainty hypothesis, what made businesses reluctant to invest?
+a) Uncertainty over property rights and government regulations
+b) Lack of labor supply
+c) High interest rates
+d) Deflation
+
+9. What factor tied together the countries experiencing the Great Depression initially?
+a) War reparations
+b) The international gold standard
+c) Stock market crashes  
+d) Expansionary monetary policies
+
+10. According to the text, which policy did NOT contribute to the persistence of high unemployment after 1937?
+a) The undistributed profits tax
+b) Social Security payroll taxes
+c) The Wagner Act  
+d) Monetary policy tightening
+
+Study Outline:
+
+I. Causes of the Great Depression
+   A. International gold standard system
+   B. Unequal distribution of gold reserves
+   C. Deflationary policies to remain on gold standard
+
+II. Initial Economic Contraction (1929-1933)
+    A. Falling prices and wages
+    B. Banking crises and failures 
+    C. Monetary contraction
+
+III. Policy Responses 
+     A. Hoover's policies
+         1. Holding wage rates
+         2. Smoot-Hawley tariff
+         3. Tax increases in 1932
+     B. The New Deal
+         1. Agricultural Adjustment Act (AAA)
+         2. National Recovery Administration (NRA)
+         3. Labor policies - Wagner Act
+     
+IV. Obstacles to Recovery
+    A. Contractionary monetary policy (1936-37)  
+    B. Rising real wage costs
+        1. Labor union growth
+        2. New taxes (undistributed profits, Social Security)
+    C. Regime uncertainty damping investment
+
+V. Reassessing World War II Spending's Impact
+
+VI. Lessons and Preventing Future Depressions
+    A. Importance of monetary policy
+    B. Dangers of wage/price inflexibility  
+    C. Unintended consequences of regulations
+
+Answers: 1.c 2.c 3.b 4.a 5.b 6.a 7.d 8.a 9.b 10.c
+
+Elaborate on Keynesian Economics:
+
+The text discusses how the experience of the Great Depression led to the widespread acceptance of Keynesian economic thinking for several decades. Here are some key points about the impact of Keynesian economics on the Great Depression:
+
+1. Inadequate Demand: Many economists, including John Maynard Keynes, blamed the Great Depression on inadequate aggregate demand in the economy. The Keynesian view was that government intervention was needed to increase spending and boost demand during economic downturns.
+
+2. New Deal Programs: Several New Deal programs adopted under President Roosevelt, like the Agricultural Adjustment Act (AAA) and National Recovery Administration (NRA), were influenced by Keynesian ideas of increasing demand through government spending, even though the text criticizes their implementation.
+
+3. Deficit Spending: Keynes advocated for deficit spending by the government during recessions as a way to inject demand into the economy. This went against the conventional wisdom of balanced budgets that prevailed before the Depression.
+
+4. Critique of Wage/Price Inflexibility: Keynes criticized the idea that allowing wages and prices to fall would automatically restore full employment during a depression. He argued for policies to maintain wages and increase demand instead.
+
+5. Multiplier Effect: The Keynesian multiplier concept suggested that increases in government spending could promote a multiplier effect, increasing income and employment by an amplified amount throughout the economy.
+
+6. Post-War Dominance: After World War II, the Keynesian economic model became the dominant framework for explaining the Great Depression and shaping macroeconomic policies for the next 40 years or so.
+
+However, the text also notes some criticism of Keynesian policies during the New Deal period, such as the NRA's attempt to reduce production, which exacerbated the economic contraction initially. Aspects like wage inflexibility were also seen as counterproductive by some economists.
+
+Overall, while the New Deal's specific programs drew criticism, the experience of the Great Depression led to a widespread embrace of Keynesian principles of demand-side economics and an activist role for government in stabilizing the business cycle through fiscal and monetary policies.
