@@ -1,12 +1,17 @@
 import os
 from pypdf import PdfReader
 from anthropic import Anthropic
+import tiktoken  # Token counting library
+
 
 # Initialize the Anthropic client with the API key
 api_key = os.environ.get('CLAUDE_API_KEY')
 client = Anthropic(api_key=api_key)
 
 MODEL_NAME = "claude-3-sonnet-20240229"
+TOKEN_LIMIT = 9000
+CACHE_FILE = "cached_results.json"
+
 
 
 
